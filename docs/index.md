@@ -1,2 +1,5 @@
+---
+title: rc-memory-manager
+---
 
-## Hello rc-memory-manager!
+<embed src="../README.md"></embed>

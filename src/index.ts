@@ -1,1 +1,5 @@
-export { default as Foo } from './Foo';
+import MemoryManager from './MemoryManager';
+
+export * from './types';
+
+export default MemoryManager;

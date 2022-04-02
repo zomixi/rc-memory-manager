@@ -1,0 +1,148 @@
+@memory-manager-cell-size: 24px;
+@memory-manager-cell-margin: 4px;
+@memory-manager-color-free: #cdcdcd;
+@memory-manager-color-disabled: #f04e39;
+@memory-manager-color-used: #4caf50;
+@memory-manager-color-highlight: #fde047;
+
+.memory-manager {
+  position: relative;
+  display: inline-block;
+  color: #999;
+  background-color: #fff;
+
+  .header {
+    height: 40px;
+    line-height: 40px;
+  }
+
+  .legend {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+
+    &::before {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      margin-right: 4px;
+      content: '';
+    }
+
+    &.free::before {
+      background: @memory-manager-color-free;
+    }
+
+    &.used::before {
+      background: @memory-manager-color-used;
+    }
+  }
+
+  .content {
+    padding: 0 @memory-manager-cell-size @memory-manager-cell-size 0;
+    border: 1px solid #e8e8e8;
+  }
+
+  .coordinate {
+    max-height: (@memory-manager-cell-size+ @memory-manager-cell-margin*2) * 8;
+    overflow: auto;
+  }
+
+  .matrix {
+    flex-wrap: wrap;
+    box-sizing: content-box;
+    width: (@memory-manager-cell-size+ @memory-manager-cell-margin*2) * 8;
+  }
+
+  .matrix-row {
+    display: flex;
+    flex-direction: row-reverse;
+    height: (@memory-manager-cell-size+ @memory-manager-cell-margin*2);
+  }
+
+  .bit-axis {
+    display: inline-flex;
+    width: (@memory-manager-cell-size+ @memory-manager-cell-margin*2) * 8;
+  }
+
+  .byte-axis {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .corner {
+    position: relative;
+    display: inline-flex;
+    width: @memory-manager-cell-size;
+    height: @memory-manager-cell-size;
+    margin: @memory-manager-cell-margin;
+    font-size: 12px;
+    line-height: 12px;
+
+    .bit-label {
+      position: absolute;
+      top: 6px;
+      right: -12px;
+    }
+
+    .byte-label {
+      position: absolute;
+      top: 8px;
+      left: 6px;
+      width: 12px;
+    }
+  }
+
+  .cell {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: @memory-manager-cell-size;
+    height: @memory-manager-cell-size;
+    margin: @memory-manager-cell-margin;
+    color: #fff;
+    cursor: pointer;
+    &.free {
+      background: @memory-manager-color-free;
+    }
+
+    &.used {
+      background: @memory-manager-color-used;
+    }
+
+    &.highlight {
+      background: @memory-manager-color-highlight;
+    }
+
+    &.disabled {
+      background: linear-gradient(
+        45deg,
+        transparent 49.5%,
+        @memory-manager-color-free 50.5%,
+        @memory-manager-color-free 50.5%,
+        transparent 50.5%
+      );
+      border: 1px solid @memory-manager-color-free;
+    }
+  }
+
+  .axis {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: @memory-manager-cell-size;
+    height: @memory-manager-cell-size;
+    margin: @memory-manager-cell-margin;
+  }
+
+  .toast {
+    position: absolute;
+    top: 50%;
+    width: (@memory-manager-cell-size+ @memory-manager-cell-margin*2) * 9 +
+      @memory-manager-cell-size;
+    text-align: center;
+  }
+}
