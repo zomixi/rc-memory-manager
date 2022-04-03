@@ -1,23 +1,44 @@
 # rc-memory-manager
 
-内存管理器
+## 📦 Install
+
+```bash
+npm install rc-memory-manager
+```
+
+```bash
+yarn add rc-memory-manager
+```
+
+## 🔨 Usage
+
+```js
+import MemoryManager from 'rc-memory-manager';
+
+const dataSource = [
+  { label: 1, startBit: 0, length: 2 },
+  { label: 2, startBit: 8, length: 8 },
+];
+
+React.render(<MemoryManager dataSource={dataSource} />, mountNode);
+```
 
 ### API
 
-| 参数 | 说明 | 类型 | 默认值 |
+| Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| size | 内存大小（单位：byte） | `number` | `8` |
-| disabled | 是否禁用 | `boolean` | `false` |
-| multiplex | 是否多路复用（即内存是否可重叠） | `boolean` | `false` |
-| locatingLabel | 定位标签 | `Key` | - |
-| highlightLabels | 高亮标签 | `Key[]` | - |
-| dataSource | 内存记录数据源 | [`MemoryRecord`](#memoryrecord)`[]` | - |
-| onChange | 内存记录改变回调 | [`MemoryRecord`](#memoryrecord)`[] => void` | - |
+| size | memory size (unit: byte) | `number` | `8` |
+| disabled | disabled | `boolean` | `false` |
+| multiplex | multiplex | `boolean` | `false` |
+| locatingLabel | the label is locating | `Key` | - |
+| highlightLabels | which labels is highlight | `Key[]` | - |
+| dataSource | dataSource | [`MemoryRecord`](#MemoryRecord)`[]` | - |
+| onChange | onChange | [`MemoryRecord`](#MemoryRecord)`[] => void` | - |
 
 ### MemoryRecord
 
-| 参数     | 说明                | 类型     | 默认值 |
-| -------- | ------------------- | -------- | ------ |
-| label    | 标识                | `Key`    | -      |
-| startBit | 起始位              | `number` | -      |
-| length   | 内存长度(单位：bit) | `number` | -      |
+| Property | Description        | Type     | Default |
+| -------- | ------------------ | -------- | ------- |
+| label    | label              | `Key`    | -       |
+| startBit | start bit          | `number` | -       |
+| length   | length (unit: bit) | `number` | -       |
