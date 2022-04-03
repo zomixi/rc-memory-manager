@@ -10,13 +10,9 @@
   "typings": "es/index.d.ts",
   "scripts": {
     "start": "dumi dev",
-    "docs:build": "dumi build",
-    "docs:deploy": "gh-pages -d docs-dist",
-    "build": "father-build",
+    "build:docs": "dumi build",
     "build:style": "lessc lib/style.less lib/style.css & lessc es/style.less es/style.css",
-    "deploy": "npm run docs:build && npm run docs:deploy",
     "build:lib": "npm run build && npm run build:style",
-    "prettier": "prettier --write .",
     "test": "umi-test",
     "test:coverage": "umi-test --coverage"
   },
