@@ -13,13 +13,12 @@
     "docs:build": "dumi build",
     "docs:deploy": "gh-pages -d docs-dist",
     "build": "father-build",
-    "build:style": "lessc src/style.less src/style.css",
+    "build:style": "lessc lib/style.less lib/style.css & lessc es/style.less es/style.css",
     "deploy": "npm run docs:build && npm run docs:deploy",
-    "compile": "npm run build:style && npm run build",
+    "build:lib": "npm run build && npm run build:style",
     "prettier": "prettier --write .",
     "test": "umi-test",
-    "test:coverage": "umi-test --coverage",
-    "prepublishOnly": "npm run build"
+    "test:coverage": "umi-test --coverage"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
