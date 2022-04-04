@@ -4,6 +4,13 @@
   "author": "zomixi",
   "license": "MIT",
   "description": "A memory manager react component.",
+  "keywords": [
+    "react",
+    "component",
+    "memory",
+    "byte",
+    "bit"
+  ],
   "files": [
     "es",
     "lib"
@@ -44,6 +51,7 @@
     "@babel/runtime": "^7.17.8",
     "ahooks": "^3.3.0",
     "antd": "^4.19.3",
+    "classnames": "^2.3.1",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
@@ -55,7 +63,6 @@
     "@types/lodash": "^4.14.181",
     "@umijs/fabric": "^2.8.1",
     "@umijs/test": "^3.0.5",
-    "babel-plugin-import": "^1.13.3",
     "dumi": "^1.1.0",
     "father-build": "^1.17.2",
     "less": "^3.10.3",
