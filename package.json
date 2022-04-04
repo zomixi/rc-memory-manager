@@ -23,7 +23,7 @@
     "start": "dumi dev",
     "build:docs": "dumi build",
     "build:style": "lessc lib/style.less lib/style.css & lessc es/style.less es/style.css",
-    "build:lib": "npm run build && npm run build:style",
+    "build:lib": "father-build && npm run build:style",
     "test": "umi-test",
     "test:coverage": "umi-test --coverage",
     "version:patch": "npm version patch -m \"chore: v%s\" && git push && git push --tags"
