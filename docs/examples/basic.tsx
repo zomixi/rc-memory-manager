@@ -1,6 +1,7 @@
 import { AimOutlined, EnvironmentOutlined } from '@ant-design/icons';
 import type { TableColumnsType } from 'antd';
 import { Button, Card, Col, InputNumber, Row, Select, Space, Switch, Table } from 'antd';
+import 'antd/dist/antd.css';
 import type { MemoryRecord } from 'rc-memory-manager';
 import MemoryManager from 'rc-memory-manager';
 import 'rc-memory-manager/style.less';
@@ -99,6 +100,7 @@ export default (): React.ReactNode => {
           <Col>
             <Table
               rowKey="label"
+              size="small"
               pagination={false}
               style={{ width: 400 }}
               scroll={{ y: 300 }}
