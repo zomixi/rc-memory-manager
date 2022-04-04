@@ -26,7 +26,7 @@
     "build:lib": "npm run build && npm run build:style",
     "test": "umi-test",
     "test:coverage": "umi-test --coverage",
-    "version:patch": "npm version patch -m \"chore: v%s\""
+    "version:patch": "npm version patch -m \"chore: v%s\" && git push && git push --tags"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
