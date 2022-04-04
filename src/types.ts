@@ -8,9 +8,11 @@ export type MemoryRecord = {
   [key: string]: any; // 支持其他多余字段，方便用户保存数据
 };
 
+export type MemoryCellStatus = 'FREE' | 'USED';
+
 // 内存单元
 export type MemoryCell = {
   key: Key; // 唯一标识
   labels: Key[]; // 展示标签数组
-  status: 'FREE' | 'DISABLED' | 'USED'; // 状态
+  status: MemoryCellStatus; // 状态
 };

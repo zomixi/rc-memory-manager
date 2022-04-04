@@ -1,5 +1,4 @@
-import { Alert, Col, Row } from 'antd';
-import { chunk, isNil } from 'lodash';
+import { chunk, isNil, noop } from 'lodash';
 import React, { Key, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Matrix from './Matrix';
 import { MemoryCell, MemoryRecord } from './types';
@@ -21,9 +20,9 @@ const MemoryManager: React.FC<MemoryManagerProps> = ({
   locatingLabel = null,
   highlightLabels = [],
   dataSource = [],
-  onChange = () => {},
+  onChange = noop,
 }) => {
-  const containerRef = useRef<any>();
+  const containerRef = useRef<HTMLDivElement>(null);
   const messageTextTimerRef = useRef<any>(null);
   const [messageText, setMessageText] = useState(''); // 错误信息
 
@@ -79,7 +78,7 @@ const MemoryManager: React.FC<MemoryManagerProps> = ({
     return newMemoryCells;
   }, [size, dataSource, multiplex, onChange]);
 
-  const generateAxis = (axisNumbers: number[]) => {
+  const renderAxises = (axisNumbers: number[]) => {
     return axisNumbers.map((axis) => (
       <div key={axis} className="axis">
         {axis}
@@ -93,7 +92,7 @@ const MemoryManager: React.FC<MemoryManagerProps> = ({
   const ByteAxis = useMemo(() => {
     const axisNumbers = Array.from({ length: size }).map((item, index) => index + 1);
 
-    return <div className="byte-axis">{generateAxis(axisNumbers)}</div>;
+    return <div className="byte-axis">{renderAxises(axisNumbers)}</div>;
   }, []);
 
   /**
@@ -102,7 +101,7 @@ const MemoryManager: React.FC<MemoryManagerProps> = ({
   const BitAxis = useMemo(() => {
     const axisNumbers = [8, 7, 6, 5, 4, 3, 2, 1];
 
-    return <div className="bit-axis">{generateAxis(axisNumbers)}</div>;
+    return <div className="bit-axis">{renderAxises(axisNumbers)}</div>;
   }, []);
 
   /**
@@ -163,7 +162,7 @@ const MemoryManager: React.FC<MemoryManagerProps> = ({
       setMessageText('');
 
       if (!locatingRecord) {
-        toast('请先选择定位记录');
+        toast('请先选择需要定位的记录');
         return;
       }
 
@@ -173,14 +172,9 @@ const MemoryManager: React.FC<MemoryManagerProps> = ({
       }
 
       if (isNil(locatingRecord.label) || !locatingRecord.length) {
-        toast('定位记录格式有误');
+        toast('定位记录的格式有误');
         return;
       }
-
-      // if (dataSource?.some((record) => record.label === locatingRecord.label)) {
-      //   toast(`记录 ${locatingRecord.label} 已被设置，如需改动先清除`);
-      //   return;
-      // }
 
       if (targetIndex + locatingRecord.length > size * 8) {
         toast('连续内存不够，请重新选择');
@@ -214,14 +208,14 @@ const MemoryManager: React.FC<MemoryManagerProps> = ({
   return (
     <div className="memory-manager">
       <div className="header">
-        <Row justify="space-around">
-          <Col className="legend free">空闲 {freeTotal}</Col>
-          <Col className="legend used">已选 {usedTotal}</Col>
-        </Row>
+        <div className="legends">
+          <div className="legend free">空闲 {freeTotal}</div>
+          <div className="legend used">已选 {usedTotal}</div>
+        </div>
       </div>
 
       <div className="content">
-        <Row align="middle">
+        <div className="row">
           {/* 对角 */}
           <div className="corner">
             <div className="byte-label">字节</div>
@@ -230,9 +224,9 @@ const MemoryManager: React.FC<MemoryManagerProps> = ({
 
           {/* 位坐标 */}
           {BitAxis}
-        </Row>
+        </div>
 
-        <Row wrap={false} className="coordinate" ref={containerRef}>
+        <div className="coordinate" ref={containerRef}>
           {/* 字节坐标 */}
           {ByteAxis}
 
@@ -243,15 +237,11 @@ const MemoryManager: React.FC<MemoryManagerProps> = ({
             highlightLabels={highlightLabels}
             containerRef={containerRef}
           />
-        </Row>
+        </div>
       </div>
 
       {/* toast */}
-      {messageText && (
-        <div className="toast">
-          <Alert message={messageText} type="warning" showIcon />
-        </div>
-      )}
+      {messageText && <div className="toast">{messageText}</div>}
     </div>
   );
 };

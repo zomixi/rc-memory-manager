@@ -16,6 +16,12 @@
     line-height: 40px;
   }
 
+  .legends {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+
   .legend {
     display: flex;
     align-items: center;
@@ -44,6 +50,8 @@
   }
 
   .coordinate {
+    display: flex;
+    flex-wrap: nowrap;
     max-height: (@memory-manager-cell-size+ @memory-manager-cell-margin*2) * 8;
     overflow: auto;
   }
@@ -54,10 +62,15 @@
     width: (@memory-manager-cell-size+ @memory-manager-cell-margin*2) * 8;
   }
 
-  .matrix-row {
+  .cell-row {
     display: flex;
     flex-direction: row-reverse;
     height: (@memory-manager-cell-size+ @memory-manager-cell-margin*2);
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
   }
 
   .bit-axis {
@@ -69,6 +82,16 @@
     display: inline-flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  .axis {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: @memory-manager-cell-size;
+    height: @memory-manager-cell-size;
+    margin: @memory-manager-cell-margin;
   }
 
   .corner {
@@ -94,55 +117,49 @@
     }
   }
 
-  .cell {
-    display: flex;
-    flex: none;
-    align-items: center;
-    justify-content: center;
-    width: @memory-manager-cell-size;
-    height: @memory-manager-cell-size;
-    margin: @memory-manager-cell-margin;
-    color: #fff;
-    cursor: pointer;
-    &.free {
-      background: @memory-manager-color-free;
-    }
-
-    &.used {
-      background: @memory-manager-color-used;
-    }
-
-    &.highlight {
-      background: @memory-manager-color-highlight;
-    }
-
-    &.disabled {
-      background: linear-gradient(
-        45deg,
-        transparent 49.5%,
-        @memory-manager-color-free 50.5%,
-        @memory-manager-color-free 50.5%,
-        transparent 50.5%
-      );
-      border: 1px solid @memory-manager-color-free;
-    }
-  }
-
-  .axis {
-    display: flex;
-    flex: none;
-    align-items: center;
-    justify-content: center;
-    width: @memory-manager-cell-size;
-    height: @memory-manager-cell-size;
-    margin: @memory-manager-cell-margin;
-  }
-
   .toast {
     position: absolute;
     top: 50%;
-    width: (@memory-manager-cell-size+ @memory-manager-cell-margin*2) * 9 +
-      @memory-manager-cell-size;
+    width: 100%;
+    padding: 8px 15px;
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 14px;
+    font-variant: tabular-nums;
     text-align: center;
+    word-wrap: break-word;
+    list-style: none;
+    background-color: #fffbe6;
+    border: 1px solid #ffe58f;
+    border-radius: 2px;
+    font-feature-settings: 'tnum', 'tnum';
   }
+}
+
+.memory-manager-cell {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: @memory-manager-cell-size;
+  height: @memory-manager-cell-size;
+  margin: @memory-manager-cell-margin;
+  color: #fff;
+  cursor: pointer;
+  &.free {
+    background: @memory-manager-color-free;
+  }
+
+  &.used {
+    background: @memory-manager-color-used;
+  }
+
+  &.highlight {
+    background: @memory-manager-color-highlight;
+  }
+}
+
+.memory-manager-empty-description {
+  color: rgba(0, 0, 0, 0.5);
+  font-weight: bold;
+  font-size: 12px;
 }

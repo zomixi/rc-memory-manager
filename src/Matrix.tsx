@@ -1,15 +1,16 @@
 import { useVirtualList } from 'ahooks';
-import type { BasicTarget } from 'ahooks/lib/utils/domTarget';
-import { Popover, Tag } from 'antd';
-import { intersection } from 'lodash';
-import type { Key } from 'react';
+import { Popover } from 'antd';
+import 'antd/lib/popover/style';
+import { intersection, noop } from 'lodash';
+import type { Key, RefObject } from 'react';
 import React, { useEffect, useRef } from 'react';
+import Cell from './Cell';
 import type { MemoryCell } from './types';
 
 type MatrixProps = {
   originalList: MemoryCell[][];
   highlightLabels?: Key[];
-  containerRef: BasicTarget<Element>;
+  containerRef: RefObject<HTMLDivElement>;
   onCellClick: (cell: MemoryCell, index: number) => void;
 };
 
@@ -17,9 +18,7 @@ const Matrix: React.FC<MatrixProps> = ({
   containerRef,
   originalList,
   highlightLabels = [],
-  onCellClick = () => {
-    // This is intentional
-  },
+  onCellClick = noop,
 }) => {
   // 虚拟滚动支持
   const wrapperRef = useRef<any>(null);
@@ -37,7 +36,7 @@ const Matrix: React.FC<MatrixProps> = ({
   return (
     <div className="matrix" ref={wrapperRef}>
       {renderCells.map((item) => (
-        <div className="matrix-row" key={item.index}>
+        <div className="cell-row" key={item.index}>
           {item.data?.map((cell) => {
             const shouldHighlightLabels = intersection(cell.labels || [], highlightLabels || []);
 
@@ -46,24 +45,31 @@ const Matrix: React.FC<MatrixProps> = ({
                 key={cell.key}
                 title={`当前位置：${(cell.key as number) + 1}`}
                 content={
-                  <div>
-                    {cell.labels?.map((label) => (
-                      <Tag key={label}>{label}</Tag>
-                    ))}
-                  </div>
+                  cell.labels?.length > 0 ? (
+                    <div>
+                      {cell.labels?.map((label) => (
+                        <Cell
+                          key={label}
+                          label={label}
+                          status={cell.status}
+                          highlight={highlightLabels?.includes(label)}
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="memory-manager-empty-description">暂无记录</div>
+                  )
                 }
               >
-                <div
-                  onClick={() => onCellClick(cell, cell.key as number)}
-                  className={`
-                    cell
-                    ${cell.status === 'DISABLED' ? 'disabled' : ''}
-                    ${cell.status === 'FREE' ? 'free' : ''}
-                    ${cell.status === 'USED' ? 'used' : ''}
-                    ${shouldHighlightLabels.length > 0 ? 'highlight' : ''}
-                  `}
-                >
-                  {shouldHighlightLabels.length > 0 ? shouldHighlightLabels[0] : cell.labels[0]}
+                <div>
+                  <Cell
+                    label={
+                      shouldHighlightLabels.length > 0 ? shouldHighlightLabels[0] : cell.labels[0]
+                    }
+                    status={cell.status}
+                    highlight={shouldHighlightLabels.length > 0}
+                    onClick={() => onCellClick(cell, cell.key as number)}
+                  />
                 </div>
               </Popover>
             );
