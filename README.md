@@ -14,7 +14,7 @@ yarn add rc-memory-manager
 
 ```js
 import MemoryManager from 'rc-memory-manager';
-import 'rc-memory-manager/style.less';
+import 'rc-memory-manager/lib/style.less';
 
 const dataSource = [
   { label: 1, startBit: 0, length: 2 },
